@@ -15,3 +15,7 @@ class MenuList(MenuBase):
 
 class MenuCreate(MenuBase):
     pass
+
+
+class MenuUpdate(MenuBase):
+    pass
