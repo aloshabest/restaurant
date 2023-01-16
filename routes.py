@@ -4,4 +4,4 @@ from restaurant import rest
 
 routes = APIRouter()
 
-routes.include_router(rest.router, prefix="/restaurant")
+routes.include_router(rest.router, prefix="/api/v1")

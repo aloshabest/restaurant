@@ -1,5 +1,5 @@
 from core.db import Base
-from sqlalchemy import Column, String, Integer, Text, DateTime, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Text, Float, ForeignKey
 from sqlalchemy.orm import relationship
 
 
@@ -8,9 +8,7 @@ class Menu(Base):
     id = Column(Integer, primary_key=True, index=True, unique=True)
     title = Column(String, unique=True)
     description = Column(Text)
-    date = Column(DateTime)
-    submenu = Column(Integer, ForeignKey("Submenu.id"))
-    submenu_id = relationship("Submenu")
+    submenu = relationship("Submenu", cascade='save-update, merge, delete')
 
 
 class Submenu(Base):
@@ -18,9 +16,9 @@ class Submenu(Base):
     id = Column(Integer, primary_key=True, index=True, unique=True)
     title = Column(String, unique=True)
     description = Column(Text)
-    date = Column(DateTime)
-    dish = Column(Integer, ForeignKey("Dish.id"))
-    dish_id = relationship("Dish")
+    menu_id = Column(Integer, ForeignKey("Menu.id"), nullable=False, index=True)
+    menu = relationship("Menu")
+    dish = relationship("Dish", cascade='save-update, merge, delete')
 
 
 class Dish(Base):
@@ -29,7 +27,8 @@ class Dish(Base):
     title = Column(String, unique=True)
     description = Column(Text)
     price = Column(Float)
-    date = Column(DateTime)
+    submenu_id = Column(Integer, ForeignKey("Submenu.id"), nullable=False, index=True)
+    submenu = relationship("Submenu")
 
 
 menus = Menu.__table__
