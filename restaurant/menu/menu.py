@@ -1,35 +1,34 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from core.utils import get_db
 from sqlalchemy.orm import Session
 from . import service
-from .schemas import MenuCreate, MenuList, MenuUpdate
+from .schemas import MenuRequest, MenuResponse
 from typing import List
-from uuid import UUID
 
 
 router = APIRouter()
 
 
-@router.get("/menus", response_model=List[MenuList])
+@router.get("/", response_model=List[MenuResponse])
 def menu_list(db: Session = Depends(get_db)):
     return service.get_menu_list(db)
 
 
-@router.get("/menus/{menu_id}")
+@router.get("/{menu_id}", response_model=MenuResponse)
 def menu_list_id(menu_id: int, db: Session = Depends(get_db)):
     return service.get_menu_id(menu_id, db)
 
 
-@router.post("/menus")
-def menu_post(item: MenuCreate, db: Session = Depends(get_db)):
+@router.post("/", response_model=MenuResponse, status_code=201)
+def menu_post(item: MenuRequest, db: Session = Depends(get_db)):
     return service.create_menu(db, item)
 
 
-@router.put("/menus/{menu_id}")
-def menu_update(menu_id: int, item: MenuUpdate, db: Session = Depends(get_db)):
+@router.patch("/{menu_id}", response_model=MenuResponse)
+def menu_update(menu_id: int, item: MenuRequest, db: Session = Depends(get_db)):
     return service.update_menu(menu_id, db, item)
 
 
-@router.delete("/menus/{menu_id}")
+@router.delete("/{menu_id}")
 def menu_delete(menu_id: int, db: Session = Depends(get_db)):
     return service.delete_menu(menu_id, db)
