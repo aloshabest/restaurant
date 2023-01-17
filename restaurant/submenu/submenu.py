@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.get("/{menu_id}/submenus", response_model=List[SubmenuResponse])
-def menu_list(menu_id: int, db: Session = Depends(get_db)):
+def submenu_list(menu_id: int, db: Session = Depends(get_db)):
     return service.get_submenu_list(menu_id, db)
 
 
@@ -20,12 +20,12 @@ def submenu_list_id(menu_id: int, submenu_id: int, db: Session = Depends(get_db)
 
 
 @router.post("/{menu_id}/submenus", response_model=SubmenuResponse, status_code=201)
-def menu_post(menu_id: int, item: SubmenuRequest, db: Session = Depends(get_db)):
+def submenu_post(menu_id: int, item: SubmenuRequest, db: Session = Depends(get_db)):
     return service.create_submenu(menu_id, db, item)
 
 
 @router.patch("/{menu_id}/submenus/{submenu_id}", response_model=SubmenuResponse)
-def menu_update(menu_id: int, submenu_id: int, item: SubmenuRequest, db: Session = Depends(get_db)):
+def submenu_update(menu_id: int, submenu_id: int, item: SubmenuRequest, db: Session = Depends(get_db)):
     return service.update_submenu(menu_id, submenu_id, db, item)
 
 

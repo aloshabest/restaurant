@@ -48,6 +48,7 @@ def update_submenu(menu_id, submenu_id, db: Session, item: SubmenuResponse):
         submenu.description = item.description
     db.commit()
     db.refresh(submenu)
+    submenu = add(submenu)
     return submenu
 
 

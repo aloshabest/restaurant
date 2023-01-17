@@ -1,5 +1,5 @@
 from core.db import Base
-from sqlalchemy import Column, String, Integer, Text, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Text, Numeric, ForeignKey
 from sqlalchemy.orm import relationship
 
 
@@ -26,7 +26,7 @@ class Dish(Base):
     id = Column(Integer, primary_key=True, index=True, unique=True)
     title = Column(String)
     description = Column(Text)
-    price = Column(Float)
+    price = Column(Numeric(scale=2), nullable=False)
     submenu_id = Column(Integer, ForeignKey("Submenu.id"), nullable=False, index=True)
     submenu = relationship("Submenu")
 
