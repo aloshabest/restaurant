@@ -16,9 +16,9 @@ source venv/scripts/activate
 ```
 pip install -r requirements.txt
 ``` 
-- В файлу db папки core замените данные PostgreSQL на свои:
+- В папке core создать файл .env и внести свои данные базы данных PostgreSQL:
 ```
-SQLALCHEMY_DATABASE_URL = "postgresql://<ваше имя пользователя>:<ваш пароль>@localhost/<название вашей базы данных>"
+SQLALCHEMY_DATABASE_URL="postgresql://<ваше имя пользователя>:<ваш пароль>@localhost/<название вашей базы данных>"
 ``` 
 - Выполните миграции
 ```
