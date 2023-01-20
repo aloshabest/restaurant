@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     env_file:
-      - core/.env
+      - .env
     entrypoint: >
       sh -c "
         python -m alembic upgrade head
