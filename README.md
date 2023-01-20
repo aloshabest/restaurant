@@ -7,6 +7,24 @@ FastAPI 0.89.1
 
 SQLAlchemy 1.4.46
 ### Запуск проекта 
+- В корневой создать файл .env и внести свои данные базы данных PostgreSQL:
+```
+DB_NAME=<название вашей базы данных>
+POSTGRES_USER=<ваше имя пользователя>
+POSTGRES_PASSWORD=<ваш пароль>
+DB_HOST=<ваш хост из docker-compose>
+DB_PORT=<ваш порт>
+SQLALCHEMY_DATABASE_URL="postgresql://<ваше имя пользователя>:<ваш пароль>@<ваш хост из docker-compose>/<название вашей базы данных>"
+```
+- Выполнить команду:
+```
+docker-compose up --build
+```
+- Запустить сайт:
+```
+http://127.0.0.1:8000/api/v1/
+```
+Другой вариант:
 - Установите и активируйте виртуальное окружение
 ```
 python -m venv venv
@@ -16,13 +34,12 @@ source venv/scripts/activate
 ```
 pip install -r requirements.txt
 ``` 
-- В папке core создать файл .env и внести свои данные базы данных PostgreSQL:
+- В корневой создать файл .env и внести свои данные базы данных PostgreSQL:
 ```
 SQLALCHEMY_DATABASE_URL="postgresql://<ваше имя пользователя>:<ваш пароль>@localhost/<название вашей базы данных>"
-``` 
+```
 - Выполните миграции
 ```
-alembic revision --autogenerate -m "create tables"
 alembic upgrade head
 ``` 
 - Выполните команду:
@@ -33,6 +50,7 @@ uvicorn main:app --reload
 ```
 http://127.0.0.1:8000/api/v1/
 ```
+
 ### Методы сервиса
 МЕНЮ:
 - /menus/

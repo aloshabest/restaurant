@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  test_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    entrypoint: >
+      sh -c "
+        python -m alembic upgrade head
+        python -m pytest -vv
+      "
+    networks:
+      - test_network
+    ports:
+      - "8000:8000"
+    depends_on:
+      test-db:
+        condition: service_healthy
+
+  test-db:
+    container_name: "test-db"
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=rest_test
+      - POSTGRES_PASSWORD=rest_test
+      - POSTGRES_DB=rest_test
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    networks:
+      - test_network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d rest_test -U rest_test" ]
+      interval: 5s
+      timeout: 20s
+      retries: 100
+
+networks:
+  test_network:
+    driver: bridge
