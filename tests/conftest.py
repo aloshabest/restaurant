@@ -76,33 +76,3 @@ def client(app: FastAPI, db_session: SessionTest) -> Generator[TestClient, Any, 
     app.dependency_overrides[get_db] = _get_test_db
     with TestClient(app) as client:
         yield client
-
-
-@pytest.fixture(scope="function")
-def filled_menu():
-    return {
-        "id": 1,
-        "title": "My test menu 1",
-        "description": "My test menu description 1",
-    }
-
-
-@pytest.fixture(scope="function")
-def filled_submenu():
-    return {
-        "id": 2,
-        "menu_id": 1,
-        "title": "My test submenu 1",
-        "description": "My test submenu description 1",
-    }
-
-
-@pytest.fixture(scope="function")
-def filled_dish():
-    return {
-        "id": 3,
-        "submenu_id": 2,
-        "title": "My test dish 1",
-        "description": "My test dish description 1",
-        "price": 11.11,
-    }

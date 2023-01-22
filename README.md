@@ -24,6 +24,11 @@ docker-compose up --build
 ```
 http://127.0.0.1:8000/api/v1/
 ```
+- Запуск тестов:
+```
+docker-compose -f docker-compose.tests.yml up --build
+```
+
 Другой вариант:
 - Установите и активируйте виртуальное окружение
 ```
