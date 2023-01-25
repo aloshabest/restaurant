@@ -1,6 +1,6 @@
-DB_NAME=rest-test
-POSTGRES_USER=rest-test 
-POSTGRES_PASSWORD=rest-test 
+DB_NAME=rest_test
+POSTGRES_USER=rest_test
+POSTGRES_PASSWORD=rest_test
 DB_HOST=test-db
 DB_PORT=5432
-SQLALCHEMY_DATABASE_URL="postgresql://rest-test:rest-test@test-db/rest-test"
+SQLALCHEMY_DATABASE_URL="postgresql://rest_test:rest_test@test-db/rest_test"
