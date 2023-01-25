@@ -3,4 +3,4 @@ POSTGRES_USER=rest_test
 POSTGRES_PASSWORD=rest_test
 DB_HOST=db
 DB_PORT=5432
-SQLALCHEMY_DATABASE_URL="postgresql://rest_test:rest_test@test-db/rest"
+SQLALCHEMY_DATABASE_URL="postgresql://rest_test:rest_test@db/rest"
