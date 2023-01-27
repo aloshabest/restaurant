@@ -1,8 +1,9 @@
-from sqlalchemy.orm import Session
-from ..models import Menu
-from .schemas import MenuResponse
 from fastapi import HTTPException
-from .add_submenu import add_list, add
+from sqlalchemy.orm import Session
+
+from ..models import Menu
+from .add_submenu import add, add_list
+from .schemas import MenuResponse
 
 
 def get_menu_list(db: Session):
@@ -14,7 +15,7 @@ def get_menu_list(db: Session):
 def get_menu_id(id, db: Session):
     menu = db.query(Menu).get(id)
     if not menu:
-        raise HTTPException(status_code=404, detail=f"menu not found")
+        raise HTTPException(status_code=404, detail=f'menu not found')
     menu = add(menu)
     return menu
 
@@ -31,7 +32,7 @@ def create_menu(db: Session, item: MenuResponse):
 def update_menu(id, db: Session, item: MenuResponse):
     menu = db.query(Menu).get(id)
     if not menu:
-        raise HTTPException(status_code=404, detail=f"menu not found")
+        raise HTTPException(status_code=404, detail=f'menu not found')
     if item.title:
         menu.title = item.title
     if item.description:
@@ -45,7 +46,7 @@ def update_menu(id, db: Session, item: MenuResponse):
 def delete_menu(id, db: Session):
     menu = db.query(Menu).get(id)
     if not menu:
-        raise HTTPException(status_code=404, detail=f"menu not found")
+        raise HTTPException(status_code=404, detail=f'menu not found')
     db.delete(menu)
     db.commit()
     return None
