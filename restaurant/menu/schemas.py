@@ -8,6 +8,15 @@ class BaseMenu(BaseModel):
 
     class Config:
         orm_mode = True
+        schema_extra = {
+            'example': {
+                'id': '1',
+                'title': 'My menu title',
+                'description': 'My menu description',
+                'submenus_count': 0,
+                'dishes_count': 0,
+            },
+        }
 
 
 class MenuRequest(BaseModel):

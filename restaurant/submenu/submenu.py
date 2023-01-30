@@ -12,7 +12,10 @@ from .schemas import SubmenuRequest, SubmenuResponse
 router = APIRouter()
 
 
-@router.get('/{menu_id}/submenus', response_model=list[SubmenuResponse])
+@router.get(
+    path='/{menu_id}/submenus', response_model=list[SubmenuResponse], summary='Get submenu list',
+    tags=['Submenu'],
+)
 def submenu_list(menu_id: int, db: Session = Depends(get_db)):
     cache = cache_get_list('submenus')
     if cache:
@@ -22,7 +25,10 @@ def submenu_list(menu_id: int, db: Session = Depends(get_db)):
     return submenu
 
 
-@router.get('/{menu_id}/submenus/{submenu_id}', response_model=SubmenuResponse)
+@router.get(
+    path='/{menu_id}/submenus/{submenu_id}', response_model=SubmenuResponse,
+    summary='Get information about a specific submenu', tags=['Submenu'],
+)
 def submenu_list_id(menu_id: int, submenu_id: int, db: Session = Depends(get_db)):
     cache = cache_get_item('submenu', submenu_id)
     if cache:
@@ -36,7 +42,10 @@ def submenu_list_id(menu_id: int, submenu_id: int, db: Session = Depends(get_db)
     return submenu
 
 
-@router.post('/{menu_id}/submenus', response_model=SubmenuResponse, status_code=201)
+@router.post(
+    path='/{menu_id}/submenus', response_model=SubmenuResponse, status_code=201,
+    summary='Create a new submenu', tags=['Submenu'],
+)
 def submenu_post(menu_id: int, item: SubmenuRequest, db: Session = Depends(get_db)):
     submenu = service.create_submenu(menu_id, db, item)
     items = {
@@ -50,7 +59,10 @@ def submenu_post(menu_id: int, item: SubmenuRequest, db: Session = Depends(get_d
     return submenu
 
 
-@router.patch('/{menu_id}/submenus/{submenu_id}', response_model=SubmenuResponse)
+@router.patch(
+    path='/{menu_id}/submenus/{submenu_id}', response_model=SubmenuResponse,
+    summary='Update a specific submenu', tags=['Submenu'],
+)
 def submenu_update(menu_id: int, submenu_id: int, item: SubmenuRequest, db: Session = Depends(get_db)):
     submenu = service.update_submenu(menu_id, submenu_id, db, item)
     items = {
@@ -62,7 +74,7 @@ def submenu_update(menu_id: int, submenu_id: int, item: SubmenuRequest, db: Sess
     return submenu
 
 
-@router.delete('/{menu_id}/submenus/{submenu_id}')
+@router.delete(path='/{menu_id}/submenus/{submenu_id}', summary='Delete a specific submenu', tags=['Submenu'])
 def submenu_delete(menu_id: int, submenu_id: int, db: Session = Depends(get_db)):
     submenu = service.delete_submenu(menu_id, submenu_id, db)
     cache_delete_item('submenu', submenu_id)

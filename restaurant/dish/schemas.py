@@ -8,6 +8,14 @@ class BaseDish(BaseModel):
 
     class Config:
         orm_mode = True
+        schema_extra = {
+            'example': {
+                'id': '3',
+                'title': 'My dish title',
+                'description': 'My dish description',
+                'price': '10.00',
+            },
+        }
 
 
 class DishRequest(BaseModel):

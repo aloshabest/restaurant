@@ -12,7 +12,7 @@ from .schemas import MenuRequest, MenuResponse
 router = APIRouter()
 
 
-@router.get('/', response_model=list[MenuResponse])
+@router.get(path='/', response_model=list[MenuResponse], summary='Get menu list', tags=['Menu'])
 def menu_list(db: Session = Depends(get_db)):
     cache = cache_get_list('menus')
     if cache:
@@ -22,7 +22,10 @@ def menu_list(db: Session = Depends(get_db)):
     return menu
 
 
-@router.get('/{menu_id}', response_model=MenuResponse)
+@router.get(
+    path='/{menu_id}', response_model=MenuResponse, summary='Get information about a specific menu',
+    tags=['Menu'],
+)
 def menu_list_id(menu_id: int, db: Session = Depends(get_db)):
     cache = cache_get_item('menu', menu_id)
     if cache:
@@ -36,7 +39,10 @@ def menu_list_id(menu_id: int, db: Session = Depends(get_db)):
     return menu
 
 
-@router.post('/', response_model=MenuResponse, status_code=201)
+@router.post(
+    path='/', response_model=MenuResponse, status_code=201, summary='Create a new menu',
+    tags=['Menu'],
+)
 def menu_post(item: MenuRequest, db: Session = Depends(get_db)):
     menu = service.create_menu(db, item)
     items = {
@@ -48,7 +54,7 @@ def menu_post(item: MenuRequest, db: Session = Depends(get_db)):
     return menu
 
 
-@router.patch('/{menu_id}', response_model=MenuResponse)
+@router.patch(path='/{menu_id}', response_model=MenuResponse, summary='Update a specific menu', tags=['Menu'])
 def menu_update(menu_id: int, item: MenuRequest, db: Session = Depends(get_db)):
     menu = service.update_menu(menu_id, db, item)
     items = {
@@ -60,7 +66,7 @@ def menu_update(menu_id: int, item: MenuRequest, db: Session = Depends(get_db)):
     return menu
 
 
-@router.delete('/{menu_id}')
+@router.delete(path='/{menu_id}', summary='Delete a specific menu', tags=['Menu'])
 def menu_delete(menu_id: int, db: Session = Depends(get_db)):
     menu = service.delete_menu(menu_id, db)
     cache_delete_item('menu', menu_id)
