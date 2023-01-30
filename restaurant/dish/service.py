@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from ..models import Dish, Menu, Submenu
-from .schemas import DishResponse
+from .schemas import DishRequest
 
 
 def get_dish_list(menu_id, submenu_id, db: Session):
@@ -26,7 +26,7 @@ def get_dish_id(menu_id, submenu_id, dish_id, db: Session):
     return dish
 
 
-def create_dish(submenu_id, db: Session, item: DishResponse):
+def create_dish(submenu_id, db: Session, item: DishRequest):
     dish = Dish(**item.dict())
     dish.submenu_id = submenu_id
     db.add(dish)
@@ -35,7 +35,7 @@ def create_dish(submenu_id, db: Session, item: DishResponse):
     return dish
 
 
-def update_dish(menu_id, submenu_id, dish_id, db: Session, item: DishResponse):
+def update_dish(menu_id, submenu_id, dish_id, db: Session, item: DishRequest):
     menu = db.query(Menu).get(menu_id)
     if not menu:
         raise HTTPException(status_code=404, detail=f'menu not found')

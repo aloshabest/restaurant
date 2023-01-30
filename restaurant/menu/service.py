@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from ..models import Menu
 from .add_submenu import add, add_list
-from .schemas import MenuResponse
+from .schemas import MenuRequest
 
 
 def get_menu_list(db: Session):
@@ -20,7 +20,7 @@ def get_menu_id(id, db: Session):
     return menu
 
 
-def create_menu(db: Session, item: MenuResponse):
+def create_menu(db: Session, item: MenuRequest):
     menu = Menu(**item.dict())
     db.add(menu)
     db.commit()
@@ -29,7 +29,7 @@ def create_menu(db: Session, item: MenuResponse):
     return menu
 
 
-def update_menu(id, db: Session, item: MenuResponse):
+def update_menu(id, db: Session, item: MenuRequest):
     menu = db.query(Menu).get(id)
     if not menu:
         raise HTTPException(status_code=404, detail=f'menu not found')
