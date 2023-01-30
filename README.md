@@ -12,9 +12,13 @@ REST API для ресторана.
 DB_NAME=<название вашей базы данных>
 POSTGRES_USER=<ваше имя пользователя>
 POSTGRES_PASSWORD=<ваш пароль>
-DB_HOST=<ваш хост из docker-compose>
+DB_HOST=<ваш хост>
 DB_PORT=<ваш порт>
 SQLALCHEMY_DATABASE_URL="postgresql://<ваше имя пользователя>:<ваш пароль>@<ваш хост из docker-compose>/<название вашей базы данных>"
+
+REDIS_HOST=<ваш хост redis>
+REDIS_PORT=<ваш порт redis>
+REDIS_DB=0
 ```
 - Выполнить команду:
 ```
