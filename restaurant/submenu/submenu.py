@@ -1,9 +1,14 @@
-from typing import List
-
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from core.cache import *
+from core.cache import (
+    cache_delete_item,
+    cache_delete_list,
+    cache_get_item,
+    cache_get_list,
+    cache_set_item,
+    cache_set_list,
+)
 from core.utils import get_db
 
 from . import service

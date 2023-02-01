@@ -1,4 +1,3 @@
-import json
 from dataclasses import dataclass
 
 
@@ -29,16 +28,18 @@ class DishData:
 
 class TestMenu:
     def test_menu_get_empty(self, client):
-        response = client.get(f'/api/v1/menus/')
+        """Checking for an empty menu list"""
+        response = client.get('/api/v1/menus/')
         assert response.status_code == 200, (
             f'Ожидается код 200, получен: {response.status_code}/'
         )
 
         assert response.json() == [], (
-            f'Ожидается пустой список'
+            'Ожидается пустой список'
         )
 
     def test_menu_post_and_get(self, client):
+        """Checking sending and receiving menus"""
         data_menu = {
             'title': 'My test menu 1',
             'description': 'My test menu description 1',
@@ -62,41 +63,43 @@ class TestMenu:
 
         menu_response_data = menu_response.json()
         assert menu_response_data['id'] == response_menu_post['id'], (
-            f'id не соответствует id data_menu'
+            'id не соответствует id data_menu'
         )
 
         assert menu_response_data['title'] == response_menu_post['title'], (
-            f'Заголовок не соответствует заголовку data_menu'
+            'Заголовок не соответствует заголовку data_menu'
         )
 
         assert menu_response_data['description'] == response_menu_post['description'], (
-            f'Описание не соответствует описаниб data_menu'
+            'Описание не соответствует описаниб data_menu'
         )
 
         assert menu_response_data['submenus_count'] == 0, (
-            f'Количество подменю не верное у данного меню'
+            'Количество подменю не верное у данного меню'
         )
 
         assert menu_response_data['dishes_count'] == 0, (
-            f'Количество блюд не верное у данного меню'
+            'Количество блюд не верное у данного меню'
         )
 
     def test_menu_delete_and_get(self, client):
+        """Checking deleting and receiving menus"""
         menu_delete_response = client.delete(f'/api/v1/menus/{MenuData.id}')
         assert menu_delete_response.status_code == 200, (
             f'Ожидается код 200, получен: {menu_delete_response.status_code}/'
         )
 
-        response = client.get(f'/api/v1/menus/')
+        response = client.get('/api/v1/menus/')
         assert response.status_code == 200, (
             f'Ожидается код 200, получен: {response.status_code}/'
         )
 
         assert response.json() == [], (
-            f'Ожидается пустой список'
+            'Ожидается пустой список'
         )
 
     def test_menu_post_and_patch(self, client):
+        """Checking sending and updating menus"""
         data_menu = {
             'title': 'My test menu 1',
             'description': 'My test menu description 1',
@@ -128,30 +131,32 @@ class TestMenu:
 
         menu_response_data = menu_response.json()
         assert menu_response_data['id'] == response_menu_patch['id'], (
-            f'id не соответствует id data_patch'
+            'id не соответствует id data_patch'
         )
 
         assert menu_response_data['title'] == response_menu_patch['title'], (
-            f'Заголовок не соответствует заголовку data_patch'
+            'Заголовок не соответствует заголовку data_patch'
         )
 
         assert menu_response_data['description'] == response_menu_patch['description'], (
-            f'Описание не соответствует описаниб data_patch'
+            'Описание не соответствует описаниб data_patch'
         )
 
 
 class TestSubmenu:
     def test_submenu_get_empty(self, client):
+        """Checking for an empty submenu list"""
         response = client.get(f'/api/v1/menus/{MenuData.id}/submenus')
         assert response.status_code == 200, (
             f'Ожидается код 200, получен: {response.status_code}/'
         )
 
         assert response.json() == [], (
-            f'Ожидается пустой список'
+            'Ожидается пустой список'
         )
 
     def test_submenu_post_and_get(self, client):
+        """Checking sending and receiving submenus"""
         data_submenu = {
             'menu_id': MenuData.id, 'title': 'My test submenu',
             'description': 'My test submenu description',
@@ -178,28 +183,29 @@ class TestSubmenu:
 
         submenu_response_data = submenu_response.json()
         assert submenu_response_data['id'] == response_submenu_post['id'], (
-            f'id не соответствует id data_submenu'
+            'id не соответствует id data_submenu'
         )
 
         assert submenu_response_data['title'] == response_submenu_post['title'], (
-            f'Заголовок не соответствует заголовку data_submenu'
+            'Заголовок не соответствует заголовку data_submenu'
         )
 
         assert submenu_response_data['description'] == response_submenu_post['description'], (
-            f'Описание не соответствует описаниб data_submenu'
+            'Описание не соответствует описаниб data_submenu'
         )
 
         assert submenu_response_data['dishes_count'] == 0, (
-            f'Количество блюд не верное у данного меню'
+            'Количество блюд не верное у данного меню'
         )
 
         menu_response = client.get(f'/api/v1/menus/{MenuData.id}')
         menu_response_data = menu_response.json()
         assert menu_response_data['submenus_count'] == 1, (
-            f'Количество подменю не верное у данного меню'
+            'Количество подменю не верное у данного меню'
         )
 
     def test_submenu_delete_and_get(self, client):
+        """Checking deleting and receiving submenus"""
         submenu_delete_response = client.delete(
             f'/api/v1/menus/{MenuData.id}/submenus/{SubmenuData.id}',
         )
@@ -213,10 +219,11 @@ class TestSubmenu:
         )
 
         assert response.json() == [], (
-            f'Ожидается пустой список'
+            'Ожидается пустой список'
         )
 
     def test_submenu_post_and_patch(self, client):
+        """Checking sending and updating submenus"""
         data_submenu = {
             'menu_id': MenuData.id, 'title': 'My test submenu',
             'description': 'My test submenu description',
@@ -251,20 +258,21 @@ class TestSubmenu:
 
         submenu_response_data = submenu_response.json()
         assert submenu_response_data['id'] == response_submenu_patch['id'], (
-            f'id не соответствует id data_patch'
+            'id не соответствует id data_patch'
         )
 
         assert submenu_response_data['title'] == response_submenu_patch['title'], (
-            f'Заголовок не соответствует заголовку data_patch'
+            'Заголовок не соответствует заголовку data_patch'
         )
 
         assert submenu_response_data['description'] == response_submenu_patch['description'], (
-            f'Описание не соответствует описаниб data_patch'
+            'Описание не соответствует описаниб data_patch'
         )
 
 
 class TestDish:
     def test_dish_get_empty(self, client):
+        """Checking for an empty dish list"""
         response = client.get(
             f'/api/v1/menus/{MenuData.id}/submenus/{SubmenuData.id}/dishes',
         )
@@ -273,10 +281,11 @@ class TestDish:
         )
 
         assert response.json() == [], (
-            f'Ожидается пустой список'
+            'Ожидается пустой список'
         )
 
     def test_dish_post_and_get(self, client):
+        """Checking sending and receiving dishes"""
         data_dish = {
             'submenu_id': SubmenuData.id, 'title': 'My test dish',
             'description': 'My test dish description', 'price': 11.11,
@@ -303,15 +312,15 @@ class TestDish:
 
         dish_response_data = dish_response.json()
         assert dish_response_data['id'] == response_dish_post['id'], (
-            f'id не соответствует id data_dish'
+            'id не соответствует id data_dish'
         )
 
         assert dish_response_data['title'] == response_dish_post['title'], (
-            f'Заголовок не соответствует заголовку data_dish'
+            'Заголовок не соответствует заголовку data_dish'
         )
 
         assert dish_response_data['description'] == response_dish_post['description'], (
-            f'Описание не соответствует описаниб data_dish'
+            'Описание не соответствует описаниб data_dish'
         )
 
         submenu_response = client.get(
@@ -319,10 +328,11 @@ class TestDish:
         )
         submenu_response_data = submenu_response.json()
         assert submenu_response_data['dishes_count'] == 1, (
-            f'Количество блюд не верное у данного подменю'
+            'Количество блюд не верное у данного подменю'
         )
 
     def test_dish_delete_and_get(self, client):
+        """Checking deleting and receiving dishes"""
         dish_delete_response = client.delete(
             f'/api/v1/menus/{MenuData.id}/submenus/{SubmenuData.id}/dishes/{DishData.id}',
         )
@@ -338,10 +348,11 @@ class TestDish:
         )
 
         assert response.json() == [], (
-            f'Ожидается пустой список'
+            'Ожидается пустой список'
         )
 
     def test_dish_post_and_patch(self, client):
+        """Checking sending and updating dishes"""
         data_dish = {
             'submenu_id': SubmenuData.id, 'title': 'My test dish',
             'description': 'My test dish description', 'price': 11.11,
@@ -373,13 +384,13 @@ class TestDish:
 
         dish_response_data = dish_response.json()
         assert dish_response_data['id'] == response_dish_patch['id'], (
-            f'id не соответствует id data_patch'
+            'id не соответствует id data_patch'
         )
 
         assert dish_response_data['title'] == response_dish_patch['title'], (
-            f'Заголовок не соответствует заголовку data_patch'
+            'Заголовок не соответствует заголовку data_patch'
         )
 
         assert dish_response_data['description'] == response_dish_patch['description'], (
-            f'Описание не соответствует описаниб data_patch'
+            'Описание не соответствует описаниб data_patch'
         )
